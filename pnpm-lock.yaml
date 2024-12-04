@@ -1,0 +1,78 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    devDependencies:
+      '@types/node':
+        specifier: ^22.10.1
+        version: 22.10.1
+      bun-types:
+        specifier: ^1.1.38
+        version: 1.1.38
+      chalk:
+        specifier: ^5.3.0
+        version: 5.3.0
+      typescript:
+        specifier: ^5.7.2
+        version: 5.7.2
+
+packages:
+
+  '@types/node@20.12.14':
+    resolution: {integrity: sha512-scnD59RpYD91xngrQQLGkE+6UrHUPzeKZWhhjBSa3HSkwjbQc38+q3RoIVEwxQGRw3M+j5hpNAM+lgV3cVormg==}
+
+  '@types/node@22.10.1':
+    resolution: {integrity: sha512-qKgsUwfHZV2WCWLAnVP1JqnpE6Im6h3Y0+fYgMTasNQ7V++CBX5OT1as0g0f+OyubbFqhf6XVNIsmN4IIhEgGQ==}
+
+  '@types/ws@8.5.13':
+    resolution: {integrity: sha512-osM/gWBTPKgHV8XkTunnegTRIsvF6owmf5w+JtAfOw472dptdm0dlGv4xCt6GwQRcC2XVOvvRE/0bAoQcL2QkA==}
+
+  bun-types@1.1.38:
+    resolution: {integrity: sha512-iglB2t9z1Hc6DIuwwscwWj/csx22QlCZ96QbcqQfiy1wmuZ38srQLI/fDVkFHAo2+KL7aJZGVWF+nAWrR6Njig==}
+
+  chalk@5.3.0:
+    resolution: {integrity: sha512-dLitG79d+GV1Nb/VYcCDFivJeK1hiukt9QjRNVOsUtTy1rR1YJsmpGGTZ3qJos+uw7WmWF4wUwBd9jxjocFC2w==}
+    engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
+
+  typescript@5.7.2:
+    resolution: {integrity: sha512-i5t66RHxDvVN40HfDd1PsEThGNnlMCMT3jMUuoh9/0TaqWevNontacunWyN02LA9/fIbEWlcHZcgTKb9QoaLfg==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
+  undici-types@5.26.5:
+    resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
+
+  undici-types@6.20.0:
+    resolution: {integrity: sha512-Ny6QZ2Nju20vw1SRHe3d9jVu6gJ+4e3+MMpqu7pqE5HT6WsTSlce++GQmK5UXS8mzV8DSYHrQH+Xrf2jVcuKNg==}
+
+snapshots:
+
+  '@types/node@20.12.14':
+    dependencies:
+      undici-types: 5.26.5
+
+  '@types/node@22.10.1':
+    dependencies:
+      undici-types: 6.20.0
+
+  '@types/ws@8.5.13':
+    dependencies:
+      '@types/node': 22.10.1
+
+  bun-types@1.1.38:
+    dependencies:
+      '@types/node': 20.12.14
+      '@types/ws': 8.5.13
+
+  chalk@5.3.0: {}
+
+  typescript@5.7.2: {}
+
+  undici-types@5.26.5: {}
+
+  undici-types@6.20.0: {}

@@ -1,0 +1,20 @@
+{
+  "name": "advent-of-code-2024",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "run-day": "bun run src/days/day$DAY/index.ts",
+    "watch-day": "bun run --watch src/days/day$DAY/index.ts",
+    "run-days": "bun run src/days/index.ts",
+    "watch-days": "bun run --watch src/days/index.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "bun-types": "^1.1.38",
+    "chalk": "^5.3.0",
+    "typescript": "^5.7.2"
+  },
+  "volta": {
+    "node": "22.11.0"
+  }
+}
