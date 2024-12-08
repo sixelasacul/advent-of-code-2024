@@ -1,5 +1,6 @@
 import chalk from "chalk";
 import { measurePerformance } from "./mesurePerformance.js";
+import { readDayInput } from "./readInput.js";
 
 function logPart(partNumber: number, partFunction: () => unknown) {
   const { duration, result } = measurePerformance(partFunction);
@@ -10,15 +11,18 @@ function logPart(partNumber: number, partFunction: () => unknown) {
   );
 }
 
+type PartFunction = (input: string) => number | void;
+
 export function runDay(
   day: number,
-  part1Function: () => unknown,
-  part2Function: () => unknown = () => {}
+  part1Function: PartFunction,
+  part2Function: PartFunction = () => {}
 ) {
   console.group(chalk.underline(`Day ${day}`));
+  const input = readDayInput(day);
 
-  logPart(1, part1Function);
-  logPart(2, part2Function);
+  logPart(1, () => part1Function(input));
+  logPart(2, () => part2Function(input));
 
   console.log("-----");
   console.groupEnd();

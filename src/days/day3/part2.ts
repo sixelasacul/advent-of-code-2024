@@ -1,8 +1,4 @@
-import { readDayInput } from "../../utils/readInput.js";
-
-const input = readDayInput(3);
-
-export function runPart2() {
+export function runPart2(input: string) {
   const regex = /(don't\(\)|do\(\))|mul\((\d*),(\d*)\)/gi;
   let total = 0;
   let enabled = true;

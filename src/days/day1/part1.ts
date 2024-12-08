@@ -1,9 +1,5 @@
-import { readDayInput } from "../../utils/readInput.js";
-
-const input = readDayInput(1);
-
 // Utiliser un iterator pour l'opti ?
-export function runPart1() {
+export function runPart1(input: string) {
   const leftList: number[] = [];
   const rightList: number[] = [];
   for (const line of input.trim().split(/\n/)) {

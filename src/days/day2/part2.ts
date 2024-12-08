@@ -1,14 +1,10 @@
-import { readDayInput } from "../../utils/readInput.js";
-
-const input = readDayInput(2);
-
 /**
  * Plusieurs problèmes :
  * - Même si ça valide le même rapport, ça supprime pas le même niveau que dans l'exemple
  * - Ça ne détecte pas si c'est le premier le niveau qui est invalide
  */
 
-export function runPart2() {
+export function runPart2(input: string) {
   const reports = input.trim().split(/\n/);
   let validReports = 0;
 

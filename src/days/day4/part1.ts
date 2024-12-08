@@ -1,7 +1,3 @@
-import { readDayInput } from "../../utils/readInput.js";
-
-const input = readDayInput(4);
-
 /**
  * `-`
  */
@@ -71,7 +67,7 @@ function getRightToLeftDiagonalLine(
   return chars;
 }
 
-export function runPart1() {
+export function runPart1(input: string) {
   const length = input.search(/\n/);
   const text = input.trim().replace(/\n/g, "");
   let total = 0;

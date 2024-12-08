@@ -1,8 +1,4 @@
-import { readDayInput } from "../../utils/readInput.js";
-
-const input = readDayInput(1);
-
-export function runPart2() {
+export function runPart2(input: string) {
   const leftList: number[] = [];
   const rightList: Map<number, number> = new Map();
 
