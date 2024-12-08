@@ -1,90 +1,77 @@
-/**
- * `-`
- */
-function getHorizontalLine(input: string, length: number, index: number) {
-  const lineNumber = Math.floor(index / length);
-  const start = Math.max(index - 3, lineNumber * length);
-  const end = Math.min(index + 3, (lineNumber + 1) * length - 1);
-  return input.substring(start, end + 1);
+type Coordinates = [number, number];
+type InputMap = string[][];
+type GetLine = (map: InputMap, [x, y]: Coordinates) => string;
+
+function getCoordinates(length: number, index: number): Coordinates {
+  return [index % length, Math.floor(index / length)];
 }
 
-/**
- * `|`
- */
-function getVerticalLine(input: string, length: number, index: number) {
-  const start = Math.max(index - 3 * length, index % length);
-  const end = Math.min(
-    index + 3 * length,
-    input.length - (length - (index % length))
-  );
+const getHorizontalLine: GetLine = (map, [x, y]) => {
   let chars = "";
-  for (let i = start; i <= end; i = i + length) {
-    chars += input[i];
+  for (let i = x - 3; i <= x + 3; i++) {
+    chars += map[y]?.[i] ?? "";
   }
   return chars;
-}
+};
 
-/**
- * `\`
- */
-function getLeftToRightDiagonalLine(
-  input: string,
-  length: number,
-  index: number
-) {
-  const lineNumber = Math.floor(index / length);
-  const start = Math.max(index - 3 - 3 * length, (index % length) - lineNumber);
-  const end = Math.min(
-    index + 3 + 3 * length,
-    input.length - (length - lineNumber)
-  );
+const getVerticalLine: GetLine = (map, [x, y]) => {
   let chars = "";
-
-  for (let i = start; i <= end; i = i + length + 1) {
-    chars += input[i];
+  for (let i = y - 3; i <= y + 3; i++) {
+    chars += map[i]?.[x] ?? "";
   }
   return chars;
-}
+};
 
-/**
- * `/`
- */
-function getRightToLeftDiagonalLine(
-  input: string,
-  length: number,
-  index: number
-) {
-  const lineNumber = Math.floor(index / length);
-  const start = Math.max(
-    index + 3 - 3 * length,
-    input.length - 1 - ((index + 1) % length) * length
-  );
-  const end = Math.min(index - 3 + 3 * length, input.length - lineNumber);
+const getDiagonalLineLeftToRight: GetLine = (map, [x, y]) => {
   let chars = "";
-  for (let i = start; i <= end; i = i + length - 1) {
-    chars += input[i];
+  let xi = x - 3;
+  let yi = y - 3;
+  while (xi <= x + 3 && yi <= y + 3) {
+    chars += map[yi]?.[xi] ?? "";
+    xi++;
+    yi++;
   }
   return chars;
+};
+
+const getDiagonalLineRightToLeft: GetLine = (map, [x, y]) => {
+  let chars = "";
+  let xi = x + 3;
+  let yi = y - 3;
+  while (xi >= x - 3 && yi <= y + 3) {
+    chars += map[yi]?.[xi] ?? "";
+    xi--;
+    yi++;
+  }
+  return chars;
+};
+
+function checkLine(line: string) {
+  if (/samxmas/gi.test(line)) return 2;
+  if (/xmas|samx/gi.test(line)) return 1;
+  return 0;
 }
 
 export function runPart1(input: string) {
-  const length = input.search(/\n/);
   const text = input.trim().replace(/\n/g, "");
+  // y, x
+  const map: InputMap = input
+    .trim()
+    .split(/\n/)
+    .map((line) => line.trim().split(""));
+  const length = map[0]!.length;
   let total = 0;
+
   for (const { index } of text.matchAll(/x/gi)) {
-    for (const [method, getLine] of [
-      ["horizontal", getHorizontalLine],
-      ["vertical", getVerticalLine],
-      ["diagLR", getLeftToRightDiagonalLine],
-      ["diagRL", getRightToLeftDiagonalLine],
+    const coord = getCoordinates(length, index);
+    for (const getLine of [
+      getHorizontalLine,
+      getVerticalLine,
+      getDiagonalLineLeftToRight,
+      getDiagonalLineRightToLeft,
     ] as const) {
-      const line = getLine(text, length, index);
-      console.log(index, method, line);
-      if (/xmas|samx/gi.test(line)) {
-        total++;
-      }
+      total += checkLine(getLine(map, coord));
     }
-    console.log("-----");
   }
   return total;
 }
