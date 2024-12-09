@@ -1,52 +1,52 @@
-/**
- * Plusieurs problèmes :
- * - Même si ça valide le même rapport, ça supprime pas le même niveau que dans l'exemple
- * - Ça ne détecte pas si c'est le premier le niveau qui est invalide
- */
-
 export function runPart2(input: string) {
   const reports = input.trim().split(/\n/);
   let validReports = 0;
 
   for (const report of reports) {
     const levels = report.split(/\s/);
+    const original = report.split(/\s/);
+
+    const diffs: number[] = [];
     let sign = 0;
-    let isSafe = true;
 
-    let i = 0;
-    let canTolerate = true;
-    console.log("------");
-    console.log(report);
+    for (let i = 0; i < levels.length - 1; i++) {
+      const level = Number(levels[i]);
+      const nextLevel = Number(levels[i + 1]);
+      const diff = level - nextLevel;
+      diffs.push(diff);
+      sign += Math.sign(diff);
+    }
 
-    while (i < levels.length - 1) {
-      const next = i + 1;
-      const diff = Number(levels[i]) - Number(levels[next]);
-      console.log(levels[i], levels[next], diff);
-      const absDiff = Math.abs(diff);
+    // On peut faire une diff sur les longueurs pour savoir combien de corrections on a fait
+    let hasCorrected = false;
 
-      const outOfRange = absDiff < 1 || absDiff > 3;
-      const oppositeSign = sign !== 0 && sign !== Math.sign(diff);
+    for (let i = 0; i < diffs.length - 1; i++) {
+      const diff = diffs[i]!;
+      const nextDiff = diffs[i + 1]!;
+      const isWrong = diff < 1 || diff > 3 || Math.sign(diff) !== sign;
+      const isNextWrong =
+        nextDiff < 1 || nextDiff > 3 || Math.sign(nextDiff) !== sign;
 
-      if (outOfRange || oppositeSign) {
-        if (canTolerate) {
-          levels.splice(next, 1);
-          canTolerate = false;
-          continue;
-        }
-        isSafe = false;
-        break;
+      if (!isWrong) {
+        continue;
       }
 
-      sign = Math.sign(diff);
-      i++;
+      // Si 2 diffs d'affilée sont mauvais, c'est que le chiffre central entre
+      // les 3 est mauvais. On peut supprimer le chiffre directement, et la
+      // prochaine diff.
+      // Exemple : 2 9 3 4 5 => -7 6 -1 -1
+      if (isWrong && isNextWrong) {
+        levels.splice(i + 1, 1);
+        diffs.splice(i + 1, 1);
+      }
+
+      const previousLevel = levels[i];
+      const firstLevel = levels[i];
+      const secondLevel = levels[i + 1];
+      const nextLevel = levels[i + 2];
     }
 
-    console.log(levels);
-    console.log(isSafe);
-
-    if (isSafe) {
-      validReports++;
-    }
+    console.log(original.join(", "), "=>", diffs.join(", "), "=>", sign);
   }
 
   return validReports;
